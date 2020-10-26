@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{562D2FC1-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WPF", "WPF", "{6F717512-F3FF-4604-82C7-A4813CFADD3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.WPF.UI", "WPF\Explorer.WPF.UI\Explorer.WPF.UI.csproj", "{165DC97D-7CE3-4B2D-B368-0C9605FA222D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.WPF.UI", 				"WPF\Explorer.WPF.UI\Explorer.WPF.UI.csproj", "{165DC97D-7CE3-4B2D-B368-0C9605FA222D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Avalonia.UI", "AvaloniaUI\Explorer.Avalonia.UI\Explorer.Avalonia.UI.csproj", "{4AB72280-A918-43E4-A642-F6FED6BA46BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Avalonia.UI", 		"AvaloniaUI\Explorer.Avalonia.UI\Explorer.Avalonia.UI.csproj", "{4AB72280-A918-43E4-A642-F6FED6BA46BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Shared.ViewModels", "Core\Explorer.Shared.ViewModels\Explorer.Shared.ViewModels.csproj", "{6510366B-6B3B-484E-B65A-C142F451A73D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Explorer.Shared.ViewModels",	 "Core\Explorer.Shared.ViewModels\Explorer.Shared.ViewModels.csproj", "{6510366B-6B3B-484E-B65A-C142F451A73D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
