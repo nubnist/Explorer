@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 
 namespace Explorer.Shared.ViewModels
 {
@@ -11,15 +10,16 @@ namespace Explorer.Shared.ViewModels
     {
         #region PublicProperties
 
-        public string FilePath { get; set; }
-        public ObservableCollection<FileEntityViewModel> DirectoriesAndFiles { get; set; } = new ObservableCollection<FileEntityViewModel>();
-        public FileEntityViewModel SelectedFileEntity { get; set; }
+        public ObservableCollection<DirectoryTabItemViewModel> DirectoryTabItems { get; set; } = 
+            new ObservableCollection<DirectoryTabItemViewModel>();
+        public DirectoryTabItemViewModel CurrentDirectoryTabItem { get; set; }
 
         #endregion
 
         #region Commands
 
-        public ICommand OpenCommand { get; }
+        public DelegateCommand AddTabItemCommand { get; set; }
+        
 
         #endregion
 
@@ -33,10 +33,9 @@ namespace Explorer.Shared.ViewModels
 
         public MainViewModel()
         {
-            OpenCommand = new DelegateCommand(Open);
+            AddTabItemCommand = new DelegateCommand(OnAddTabItem);
 
-            foreach (var logicalDrive in Directory.GetLogicalDrives())
-                DirectoriesAndFiles.Add(new DirectoryViewModel(logicalDrive));
+            AddTabItemViewModel();
         }
 
         #endregion
@@ -47,24 +46,40 @@ namespace Explorer.Shared.ViewModels
 
         #endregion
 
+        #region PrivateMethods
+
+        private void AddTabItemViewModel()
+        {
+            var vm = new DirectoryTabItemViewModel();
+            vm.Closed += Vm_Closed;
+
+            DirectoryTabItems.Add(vm);
+            CurrentDirectoryTabItem = vm;
+        }
+
+        private void Vm_Closed(object sender, EventArgs e)
+        {
+            if (sender is DirectoryTabItemViewModel directoryTabViewModel)
+            {
+                CloseTab(directoryTabViewModel);
+            }
+
+        }
+
+        private void CloseTab(DirectoryTabItemViewModel directoryTabViewModel)
+        {
+            directoryTabViewModel.Closed -= Vm_Closed;
+
+            DirectoryTabItems.Remove(directoryTabViewModel);
+
+            CurrentDirectoryTabItem = DirectoryTabItems.FirstOrDefault();
+        }
+
+        #endregion
+
         #region CommandsMethods
 
-        private void Open(object parameter)
-        {
-            if (parameter is DirectoryViewModel directoryViewModel)
-            {
-                FilePath = directoryViewModel.FullName;
-
-                DirectoriesAndFiles.Clear();
-                var directoryInfo = new DirectoryInfo(FilePath);
-                foreach (var directory in directoryInfo.GetDirectories())
-                    DirectoriesAndFiles.Add(new DirectoryViewModel(directory));
-
-                foreach (var file in directoryInfo.GetFiles())
-                    DirectoriesAndFiles.Add(new FileViewModel(file));
-
-            }
-        }
+        private void OnAddTabItem(object Obj) => AddTabItemViewModel();
 
         #endregion
     }
